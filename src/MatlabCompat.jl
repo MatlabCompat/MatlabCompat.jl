@@ -1,0 +1,5 @@
+module MatlabCompat
+
+# package code goes here
+
+end # module
