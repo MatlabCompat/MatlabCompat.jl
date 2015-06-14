@@ -20,7 +20,7 @@ const graythresh = Image.graythresh
 const im2bw = Image.im2bw
 const  imshow = Image.imshow
 const  imread = Image.imread
-const  mat2im = Image.mat2im
-const  im2mat = Image.im2mat
-const  rossetta = Image.rossetta
+const  mat2im = Support.mat2im
+const  im2mat = Support.im2mat
+const  rossetta = Support.rossetta
 end # module
