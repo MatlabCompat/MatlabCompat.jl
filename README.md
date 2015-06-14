@@ -22,6 +22,23 @@ However, as a word of caution Julia is not MATLAB/Octave and was never meant to 
 
 to be continued...
 
+## Developer
+
+Symlink the latest version of the package at hand. 
+
+```bash
+git clone https://github.com/MatlabCompat/MatlabCompat.jl && cd MatlabCompat.jl
+julia -e 'Pkg.init(); run(`ln -s $(pwd()) $(Pkg.dir("MatlabCompat"))`); Pkg.pin("MatlabCompat"); Pkg.resolve()'
+```
+
+> On Windows you might want to use:
+
+> mklink
+
+If you have any troubles simply remove the folder in your home folder and try again.
+
+Afterwards check that `Pkg.status()` contains this package (with a **master (dirty)** side note)
+
 ## Disclaimer
 All the code presented in this library was written from scratch and by no means or intentions presents a complete overlap with product of Mathworks Inc., nor any intentions to violate any of materials copyrighted by Mathworks Inc. or any other respective third party copyright owner. By reading, downloading, forking or using this library you agree to do it at your own risk and there is no guarantee that you MATLAB/Octave code will work in a similar fashion as it would with products of Mathworks Inc. Code written here is based on open source Julia language and published state-of-the-art algorithms being property of the public domain. Any overlap with property of respective copyright owners is pure accidental and may be caused by using published state-of-the-art algorithms being property of the public domain.
 
