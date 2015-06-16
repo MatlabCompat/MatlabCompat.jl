@@ -126,7 +126,7 @@ module Image
      # wrapper for Images.label_components
 
     #check if the input Image is black and white
-    if (~isa(inputImage,Bool))
+    if (typeof(inputImage) != Images.Image{Bool,2,Array{Bool,2}})
        error("Invalid input image. Input image is not black and white");
     end
 
