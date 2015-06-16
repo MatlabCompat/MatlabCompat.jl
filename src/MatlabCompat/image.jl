@@ -35,7 +35,7 @@ module Image
 
   using Images
   using FixedPointNumbers
-
+  using ImageView
 
   function graythresh(img)
 
@@ -103,7 +103,7 @@ module Image
           end
       end
 
-      return blacknWhite
+      return bool(blacknWhite)
   end
 
   function imshow(image)
@@ -121,5 +121,29 @@ module Image
       image = Images.imread(imageContainer);
     return image
   end
+
+  function bwlabel(inputImage,connectivity)
+     # wrapper for Images.label_components
+
+    #check if the input Image is black and white
+    if (~isa(inputImage,Bool))
+       error("Invalid input image. Input image is not black and white");
+    end
+
+    #define pixel connectivity matrixes for appropriate inputs
+    if connectivity == 4
+      connectivityMatrix = bool([0 1 0;1 1 1; 0 1 0])
+    elseif connectivity == 8
+      connectivityMatrix = bool([1 1 1;1 1 1; 1 1 1]);
+    else
+      error("Invalid pixel connectivity. Pixel connectivity can be either 4 or 8");
+    end
+
+  labeledImage = label_components(inputImage,connectivityMatrix)-1; #substracted 1 to be consistent with Matlab bwlabel output
+
+  return labeledImage;
+  end
+
+
 
 end #End of Image
