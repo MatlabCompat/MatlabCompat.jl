@@ -139,7 +139,7 @@ module Image
       error("Invalid pixel connectivity. Pixel connectivity can be either 4 or 8");
     end
 
-  labeledImage = label_components(inputImage,connectivityMatrix)-1; #substracted 1 to be consistent with Matlab bwlabel output
+  labeledImage = label_components(inputImage,connectivityMatrix); #substracted 1 to be consistent with Matlab bwlabel output
 
   return labeledImage;
   end
