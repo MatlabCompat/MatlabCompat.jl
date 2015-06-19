@@ -139,7 +139,9 @@ module ImageToolbox
       error("Invalid pixel connectivity. Pixel connectivity can be either 4 or 8");
     end
 
+
   labeledImage = label_components(inputImage,connectivityMatrix);
+
 
   return labeledImage;
   end

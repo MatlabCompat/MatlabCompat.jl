@@ -8,11 +8,12 @@ export graythresh,
        mat2im,
        im2mat,
        rossetta,
-       bwlabel
+       bwlabel,
+       load
 
 
 # Include submodules of the package.
-for file in split("image support")
+for file in split("image support io")
     include("MatlabCompat/$file.jl")
 end
 
@@ -25,4 +26,5 @@ const bwlabel = ImageToolbox.bwlabel
 const mat2im = Support.mat2im
 const im2mat = Support.im2mat
 const rossetta = Support.rossetta
+const load = Io.load
 end # module
