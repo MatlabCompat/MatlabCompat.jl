@@ -13,7 +13,7 @@ export graythresh,
 
 
 # Include submodules of the package.
-for file in split("image support")
+for file in split("image support io")
     include("MatlabCompat/$file.jl")
 end
 
