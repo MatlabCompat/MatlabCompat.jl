@@ -8,7 +8,8 @@ export graythresh,
        mat2im,
        im2mat,
        rossetta,
-       bwlabel
+       bwlabel,
+       load
 
 
 # Include submodules of the package.
@@ -25,4 +26,5 @@ const bwlabel = Image.bwlabel
 const mat2im = Support.mat2im
 const im2mat = Support.im2mat
 const rossetta = Support.rossetta
+const load = Io.load
 end # module
