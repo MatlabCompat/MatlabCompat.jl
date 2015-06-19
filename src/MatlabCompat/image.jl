@@ -1,4 +1,4 @@
-module Image
+module ImageToolbox
 #
 # graythresh - Based on the original Paper: N. Otsu, "A Threshold Selection
 # Method from Gray-Level Histograms" 1979. Calculates a threshold of a grayscale
@@ -130,7 +130,7 @@ module Image
        error("Invalid input image. Input image is not black and white");
     end
 
-    #define pixel connectivity matrixes for appropriate inputs
+    #define pixel connectivity matrices for appropriate inputs
     if connectivity == 4
       connectivityMatrix = bool([0 1 0;1 1 1; 0 1 0])
     elseif connectivity == 8
@@ -139,11 +139,11 @@ module Image
       error("Invalid pixel connectivity. Pixel connectivity can be either 4 or 8");
     end
 
-  labeledImage = label_components(inputImage,connectivityMatrix); #substracted 1 to be consistent with Matlab bwlabel output
+  labeledImage = label_components(inputImage,connectivityMatrix);
 
   return labeledImage;
   end
 
 
 
-end #End of Image
+end #End of ImageToolbox

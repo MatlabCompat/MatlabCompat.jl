@@ -1,6 +1,6 @@
 module MatlabCompat
 
-export Image, Support
+export ImageToolbox, Support
 export graythresh,
        im2bw,
        imshow,
@@ -17,11 +17,11 @@ for file in split("image support")
 end
 
 # Alias some functions.
-const graythresh = Image.graythresh
-const im2bw = Image.im2bw
-const imshow = Image.imshow
-const imread = Image.imread
-const bwlabel = Image.bwlabel
+const graythresh = ImageToolbox.graythresh
+const im2bw = ImageToolbox.im2bw
+const imshow = ImageToolbox.imshow
+const imread = ImageToolbox.imread
+const bwlabel = ImageToolbox.bwlabel
 const mat2im = Support.mat2im
 const im2mat = Support.im2mat
 const rossetta = Support.rossetta
