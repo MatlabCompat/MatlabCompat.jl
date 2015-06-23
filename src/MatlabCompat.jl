@@ -1,6 +1,6 @@
 module MatlabCompat
 
-export ImageToolbox, Support
+export ImageToolbox, Support, Io
 export graythresh,
        im2bw,
        imshow,
@@ -13,7 +13,7 @@ export graythresh,
 
 
 # Include submodules of the package.
-for file in split("image support io")
+for file in split("imagetoolbox support io")
     include("MatlabCompat/$file.jl")
 end
 
