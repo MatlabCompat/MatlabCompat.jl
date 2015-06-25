@@ -27,4 +27,6 @@ const mat2im = Support.mat2im
 const im2mat = Support.im2mat
 const rossetta = Support.rossetta
 const load = Io.load
+# imported/included inside ImageTools
+const strel = ImageTools.Morph.strel
 end # module
