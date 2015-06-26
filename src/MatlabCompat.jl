@@ -1,19 +1,19 @@
 module MatlabCompat
 
-export ImageTools, Support, Io
-export graythresh,
-       im2bw,
-       imshow,
-       imread,
-       mat2im,
+export ImageTools, Support, Io, StringTools, MathTools
+export mat2im,
        im2mat,
        rossetta,
-       bwlabel,
-       load
+       load,
+       disp,
+       num2str,
+       strcat,
+       numel,
+       max
 
 
 # Include submodules of the package.
-for file in split("imagetools support io")
+for file in split("imagetools support io stringtools mathtools")
     include("MatlabCompat/$file.jl")
 end
 
@@ -27,6 +27,11 @@ const mat2im = Support.mat2im
 const im2mat = Support.im2mat
 const rossetta = Support.rossetta
 const load = Io.load
+const disp = StringTools.disp
+const num2str = StringTools.num2str
+const strcat = StringTools.strcat
+const numel = MathTools.numel
+const max = MathTools.max
 # imported/included inside ImageTools
 const strel = ImageTools.Morph.strel
 end # module
