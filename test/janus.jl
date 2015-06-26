@@ -2,8 +2,8 @@
 #The code generated need further corrections by you. Execute it line by line and correct the errors.
 #
 #
-# Copyright © 2015 Vardan Andriasyan, Yauhen Yakimovich, Artur Yakimovich
-#   
+# Copyright ï¿½ 2015 Vardan Andriasyan, Yauhen Yakimovich, Artur Yakimovich
+#
 #  MIT license.
 #
 # Permission is hereby granted, free of charge, to any person
@@ -32,17 +32,19 @@ using MatlabCompat.ImageTools.Morph
 # changing its syntax
 
 # Basic thresholding
-# ------------------------------------------------- 
+# -------------------------------------------------
+tic()
 img = imread("http://matlabcompat.github.io/img/example.tif"); # read the remote image
 threshold = graythresh(img);
 imgbw = im2bw(img, threshold); # this is also a comment, but no quotes here
 imshow(imgbw);
+toc()
 #sprintf("%s %s", "Hello", "World") % and here is a comment
 # -------------------------------------------------
 
 # Morphological stuff
 # -------------------------------------------------
-se = strel("disk", 1);
+#se = strel("disk", 1);
 # Flat STREL object containing 5 neighbors.
 #
 # Neighborhood:
@@ -51,6 +53,6 @@ se = strel("disk", 1);
 #      0     1     0
 
 # imopen is an erosion followed by a dilation
-imgErodedDilated = imopen(I, se);
-imshow(imgErodedDilated);
+#imgErodedDilated = imopen(I, se);
+#imshow(imgErodedDilated);
 # -------------------------------------------------
