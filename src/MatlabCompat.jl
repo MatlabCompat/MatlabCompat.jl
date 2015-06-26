@@ -1,14 +1,9 @@
 module MatlabCompat
 
 export ImageTools, Support, Io
-export graythresh,
-       im2bw,
-       imshow,
-       imread,
-       mat2im,
+export mat2im,
        im2mat,
        rossetta,
-       bwlabel,
        load
 
 

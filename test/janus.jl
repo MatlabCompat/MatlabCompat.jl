@@ -39,18 +39,3 @@ imgbw = im2bw(img, threshold); # this is also a comment, but no quotes here
 imshow(imgbw);
 #sprintf("%s %s", "Hello", "World") % and here is a comment
 # -------------------------------------------------
-
-# Morphological stuff
-# -------------------------------------------------
-se = strel("disk", 1);
-# Flat STREL object containing 5 neighbors.
-#
-# Neighborhood:
-#      0     1     0
-#      1     1     1
-#      0     1     0
-
-# imopen is an erosion followed by a dilation
-imgErodedDilated = imopen(I, se);
-imshow(imgErodedDilated);
-# -------------------------------------------------

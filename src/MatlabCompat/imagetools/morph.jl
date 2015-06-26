@@ -66,6 +66,8 @@ function strel(shape::String, args...)
         else
             error("This case is not implemented yet!")
         end
+    else
+        error("This case is not implemented yet!")       
     end
 end
 
