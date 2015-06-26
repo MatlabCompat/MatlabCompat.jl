@@ -8,8 +8,7 @@ export mat2im,
        disp,
        num2str,
        strcat,
-       numel,
-       max
+       numel
 
 
 # Include submodules of the package.
@@ -34,4 +33,7 @@ const numel = MathTools.numel
 const max = MathTools.max
 # imported/included inside ImageTools
 const strel = ImageTools.Morph.strel
+const imread = ImageTools.imread
+# imported/included inside MathTools
+const max = MathTools.max
 end # module
