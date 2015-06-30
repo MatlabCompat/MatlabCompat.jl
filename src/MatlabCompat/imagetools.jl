@@ -36,6 +36,12 @@ module ImageTools
 # SOFTWARE.
 
 export Morph
+export graythresh,
+       im2bw,
+       imshow,
+       imread,
+       bwlabel
+
 
 include("imagetools/morph.jl")
 

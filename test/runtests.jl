@@ -4,10 +4,10 @@ using Images
 using FixedPointNumbers
 
 
-# write your own tests here
-
-
-@test 1 == 1
+function ()
+    # write your own tests here
+    1 == 1
+end
 
 # make a test image
 array = [0.1 0.001 0 0; 0.1 0.401 0 0; 0.1 0.01 0 0; 0.1 0.901 0 0.6];
