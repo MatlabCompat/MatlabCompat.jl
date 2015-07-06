@@ -35,26 +35,22 @@ println("testing im2bw()");
 @test sum(reinterpret(Float32, float32(im2bw(img, trueThreshold)))[:]) == trueBWSum;
 
 println("testing imread()");
-img2 = imread("http://matlabcompat.github.io/img/example.tif");
-typeof(img2) == :Image{Gray{UfixedBase{Uint8,8}},2,Array{Gray{UfixedBase{Uint8,8}},2}}
-@test
+img2 = MatlabCompat.imread("http://matlabcompat.github.io/img/example.tif");
+@test "$(typeof(img2))" == "Image{Gray{UfixedBase{Uint8,8}},2,Array{Gray{UfixedBase{Uint8,8}},2}}";
 
 ################################
 #     Support Module Tests
 ################################
 
-# println("testing im2mat()");
-# img = imread("http://matlabcompat.github.io/img/example.tif");
-# mat = im2mat(img)
-# typeof(mat)
+println("testing im2mat()");
+mat = im2mat(img)
+@test "$(typeof(mat))" == "Array{Float32,2}";
 
-# #@test typeof(convert(Array, im2mat(img)));
+println("testing mat2im()");
+@test "$(typeof(mat2im(img)))" == "Image{Float64,2,Array{Float64,2}}";
 
-# println("testing mat2im()");
-# @test typeof(mat2im(img)) == "DataType";
-
-# println("testing rossetta()");
-# @test rossetta();
+println("testing rossetta()");
+@test "$(typeof(rossetta("janus.m")))" == "Array{UTF8String,1}";
 
 
 
@@ -63,7 +59,7 @@ typeof(img2) == :Image{Gray{UfixedBase{Uint8,8}},2,Array{Gray{UfixedBase{Uint8,8
 ################################
 
 println("testing load()");
-@test typeof(load("test.mat"));
+@test "$(typeof(load("test.mat")))" == "Dict{ASCIIString,Any}";
 # "$(typeof(A))" == "Dict{Any,Any}"
 
 ################################
