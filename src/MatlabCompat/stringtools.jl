@@ -1,8 +1,7 @@
 module StringTools
   # this module contains string functions
 
-
-  # Copyright © 2014-2015 Artur Yakimovich.
+  # Copyright © 2014-2015 Vardan Andriasyan, Yauhen Yakimovich, Artur Yakimovich.
   #
   #  MIT license.
   #
@@ -23,7 +22,9 @@ module StringTools
   # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
   # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   # SOFTWARE.
-
+  export disp
+  export num2str
+  export strcat
   # wrapper for the disp function
   function disp(string)
     println(string)

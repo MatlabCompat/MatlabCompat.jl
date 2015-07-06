@@ -8,7 +8,7 @@ using MatlabCompat.MathTools
 # to work in Julia and MATLAB without
 # changing its syntax
 #
-# Copyright © Vardan Andriasyan, Yauhen Yakimovich, Artur Yakimovich 2015
+# Copyright Â© 2014-2015 Vardan Andriasyan, Yauhen Yakimovich, Artur Yakimovich.
 # MIT license.
 #
 # Permission is hereby granted, free of charge, to any person
@@ -28,7 +28,7 @@ using MatlabCompat.MathTools
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-tic() 
+tic()
 img = imread("http://matlabcompat.github.io/img/example.tif"); # read the remote image
 #img = imread("D:\github\matlabcompat.github.io\img\example.tif");
 threshold = graythresh(img); # compute graysacale threshold using Otsu algorithm

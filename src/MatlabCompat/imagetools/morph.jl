@@ -2,7 +2,7 @@ module Morph
 # Partial backwards syntax comparability for morphological operations:
 #
 #  - strlen
-#   
+#
 #       SE = strel(shape, parameters)
 #       SE = strel('arbitrary', NHOOD)
 #       SE = strel('arbitrary', NHOOD, HEIGHT)
@@ -17,16 +17,16 @@ module Morph
 #       SE = strel('square', W)
 #
 #  - imopen
-# 
+#
 #       IM2 = imopen(IM,SE)
 #       IM2 = imopen(IM,NHOOD)
 #
-#  - imdilate 
+#  - imdilate
 #  - imerode
 #
 #
-# Copyright © 2015 Yauhen Yakimovich. 
-#   
+# Copyright © 2014-2015 Vardan Andriasyan, Yauhen Yakimovich, Artur Yakimovich.
+#
 #  MIT license.
 #
 # Permission is hereby granted, free of charge, to any person
@@ -57,7 +57,7 @@ end
 function strel(shape::String, args...)
     if shape == "disk"
         assert(length(args) in (1,2))
-        radius = args[1];        
+        radius = args[1];
         nhood = (length(args) == 2)? args[2] : 0;
         assert(isa(radius, Number) && radius > 0)
         if radius == 1
@@ -67,7 +67,7 @@ function strel(shape::String, args...)
             error("This case is not implemented yet!")
         end
     else
-        error("This case is not implemented yet!")       
+        error("This case is not implemented yet!")
     end
 end
 

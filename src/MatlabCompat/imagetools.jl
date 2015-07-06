@@ -1,55 +1,55 @@
 module ImageTools
-#
-# graythresh - Based on the original Paper: N. Otsu, "A Threshold Selection
-# Method from Gray-Level Histograms" 1979. Calculates a threshold of a grayscale
-# image, which can be used downstream to convert a grayscale image to binary
-# image. One input argument is required - image (expected image format obtained
-# by Images.imread, see Images package  for more information). E.g. to convert
-# an array to image use grayim(array) or colorim(array).
-#
-# im2bw - converts image into a binary image. Input: image (expected image
-# format obtained by Images.imread,  see Images package  for more information)
-# and threshold (floating point number). E.g. to convert an array to image use
-# grayim(array) or colorim(array).
-#
-#
-# Copyright © 2014-2015 Artur Yakimovich.
-#
-#  MIT license.
-#
-# Permission is hereby granted, free of charge, to any person
-# obtaining a copy of this software and associated documentation files (the
-# "Software"), to deal in the Software without restriction, including without
-# limitation the rights to use, copy, modify, merge, publish, distribute,
-# sublicense, and/or sell copies of the Software, and to permit persons to whom
-# the Software is furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
+  #
+  # graythresh - Based on the original Paper: N. Otsu, "A Threshold Selection
+  # Method from Gray-Level Histograms" 1979. Calculates a threshold of a grayscale
+  # image, which can be used downstream to convert a grayscale image to binary
+  # image. One input argument is required - image (expected image format obtained
+  # by Images.imread, see Images package  for more information). E.g. to convert
+  # an array to image use grayim(array) or colorim(array).
+  #
+  # im2bw - converts image into a binary image. Input: image (expected image
+  # format obtained by Images.imread,  see Images package  for more information)
+  # and threshold (floating point number). E.g. to convert an array to image use
+  # grayim(array) or colorim(array).
+  #
+  #
+  # Copyright © 2014-2015 Vardan Andriasyan, Yauhen Yakimovich, Artur Yakimovich.
+  #
+  #  MIT license.
+  #
+  # Permission is hereby granted, free of charge, to any person
+  # obtaining a copy of this software and associated documentation files (the
+  # "Software"), to deal in the Software without restriction, including without
+  # limitation the rights to use, copy, modify, merge, publish, distribute,
+  # sublicense, and/or sell copies of the Software, and to permit persons to whom
+  # the Software is furnished to do so, subject to the following conditions:
+  #
+  # The above copyright notice and this permission notice shall be included in all
+  # copies or substantial portions of the Software.
+  #
+  # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  # SOFTWARE.
 
-export Morph
-export graythresh,
-       im2bw,
-       imshow,
-       imread,
-       bwlabel
+  export Morph
+  export graythresh,
+         im2bw,
+         imshow,
+         imread,
+         bwlabel
 
 
-include("imagetools/morph.jl")
+  include("imagetools/morph.jl")
 
-using Images
-using FixedPointNumbers
-using ImageView
+  using Images
+  using FixedPointNumbers
+  using ImageView
 
-function graythresh(img)
+  function graythresh(img)
 
     if isempty(img)
         error("Image is empty");
@@ -88,9 +88,9 @@ function graythresh(img)
     end
 
     return threshold
-end
+  end
 
-function im2bw(img, threshold)
+  function im2bw(img, threshold)
 
     if properties(img)["IMcs"] != "Gray";
         error("Image must be grayscale");
@@ -116,47 +116,47 @@ function im2bw(img, threshold)
     end
 
     return bool(blacknWhite)
-end
-
-function imshow(image)
-  # wrapper for ImageView.view, need to add convertion of image to array and back
-  ImageView.view(image)
-end
-
-function imread(path)
-  # wrapper for Images.imread with added image retrieval from url functionality
-  if (ismatch(r"http://.*", path) || ismatch(r"https://.*", path) || ismatch(r"ftp://.*", path)|| ismatch(r"smb://.*", path))
-    imageContainer = download(path);
-  else
-    imageContainer = path;
-  end
-    image = Images.imread(imageContainer);
-  return image
-end
-
-function bwlabel(inputImage,connectivity)
-   # wrapper for Images.label_components
-
-  #check if the input Image is black and white
-  if (typeof(inputImage) != Images.Image{Bool,2,Array{Bool,2}})
-     error("Invalid input image. Input image is not black and white");
   end
 
-  #define pixel connectivity matrices for appropriate inputs
-  if connectivity == 4
-    connectivityMatrix = bool([0 1 0;1 1 1; 0 1 0])
-  elseif connectivity == 8
-    connectivityMatrix = bool([1 1 1;1 1 1; 1 1 1]);
-  else
-    error("Invalid pixel connectivity. Pixel connectivity can be either 4 or 8");
+  function imshow(image)
+    # wrapper for ImageView.view, need to add convertion of image to array and back
+    ImageView.view(image)
   end
 
+  function imread(path)
+    # wrapper for Images.imread with added image retrieval from url functionality
+    if (ismatch(r"http://.*", path) || ismatch(r"https://.*", path) || ismatch(r"ftp://.*", path)|| ismatch(r"smb://.*", path))
+      imageContainer = download(path);
+    else
+      imageContainer = path;
+    end
+      image = Images.imread(imageContainer);
+    return image
+  end
 
-labeledImage = label_components(inputImage,connectivityMatrix);
+  function bwlabel(inputImage,connectivity)
+     # wrapper for Images.label_components
+
+    #check if the input Image is black and white
+    if (typeof(inputImage) != Images.Image{Bool,2,Array{Bool,2}})
+       error("Invalid input image. Input image is not black and white");
+    end
+
+    #define pixel connectivity matrices for appropriate inputs
+    if connectivity == 4
+      connectivityMatrix = bool([0 1 0;1 1 1; 0 1 0])
+    elseif connectivity == 8
+      connectivityMatrix = bool([1 1 1;1 1 1; 1 1 1]);
+    else
+      error("Invalid pixel connectivity. Pixel connectivity can be either 4 or 8");
+    end
 
 
-return labeledImage;
-end
+  labeledImage = label_components(inputImage,connectivityMatrix);
+
+
+  return labeledImage;
+  end
 
 
 
