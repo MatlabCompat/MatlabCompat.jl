@@ -55,7 +55,7 @@ function graythresh(img)
         error("Image is empty");
     end
     if properties(img)["IMcs"] != "Gray";
-        error ("Image must be grayscale. If your image is grayscale consider adding properties(img)[\"IMcs\"] = \"Gray\";");
+        error("Image must be grayscale. If your image is grayscale consider adding properties(img)[\"IMcs\"] = \"Gray\";");
     end
     #Convert image to an array and compute it's histogram
     image_array = reinterpret(Float32, float32(img));
@@ -93,14 +93,14 @@ end
 function im2bw(img, threshold)
 
     if properties(img)["IMcs"] != "Gray";
-        error ("Image must be grayscale");
+        error("Image must be grayscale");
     end
 
     if typeof(threshold) != Float64 && typeof(threshold) != Float32 && typeof(threshold) != Float16
-        error ("Threshold must be of types Float64, Float32 or Float16");
+        error("Threshold must be of types Float64, Float32 or Float16");
     end
     if threshold > 1 || threshold < 0
-        error ("Threshold must be between 0 and 1");
+        error("Threshold must be between 0 and 1");
     end
 
     m,n = size(img);

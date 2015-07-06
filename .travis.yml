@@ -16,4 +16,4 @@ before_install:
 #script:
 #  - julia -e 'Pkg.init(); Pkg.clone(pwd()); Pkg.test("MatlabCompat")'
 script:
-  - xvfb-run julia -e 'versioninfo(); Pkg.init(); Pkg.add("TestImages"); Pkg.clone(pwd()); Pkg.build("MatlabCompat"); Pkg.test("MatlabCompat")'
+  - xvfb-run julia -e 'versioninfo(); Pkg.init(); Pkg.add("TestImages"); Pkg.add("Images"); Pkg.add("ImageView"); Pkg.add("FixedPointNumbers"); Pkg.add("MAT"); Pkg.clone(pwd()); Pkg.build("MatlabCompat"); Pkg.test("MatlabCompat")'
