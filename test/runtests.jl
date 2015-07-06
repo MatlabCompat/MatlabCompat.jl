@@ -66,7 +66,7 @@ println("testing load()");
 #     StringTools Module Tests
 ################################
 println("testing disp()");
-@test disp() == true;
+@test disp("test") == true;
 
 println("testing num2str()");
 @test num2str(3) == "3";
