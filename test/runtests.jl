@@ -63,7 +63,8 @@ typeof(img2) == :Image{Gray{UfixedBase{Uint8,8}},2,Array{Gray{UfixedBase{Uint8,8
 ################################
 
 println("testing load()");
-# @test load();
+@test typeof(load("test.mat"));
+# "$(typeof(A))" == "Dict{Any,Any}"
 
 ################################
 #     StringTools Module Tests
