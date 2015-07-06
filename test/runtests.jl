@@ -80,7 +80,7 @@ println("testing strcat()");
 matrix = [1 2 3];
 
 println("testing numel()");
-@test numel (matrix[:]) == 3;
+@test numel(matrix[:]) == 3;
 
 println("testing max()");
 
