@@ -16,7 +16,16 @@ module Support
 
   # an m-file parser aimed at converting them as close as possible from MATLAB syntax to Julia syntax
   #using
-  function rossetta(inputMfilePath, outputJlFilePath)
+  function rossetta(filePath...)
+    # parse arguments
+    if length(filePath) >= 2
+      inputMfilePath = filePath[1]
+      outputJlFilePath = filePath[2]
+    elseif length(filePath) == 1
+      inputMfilePath = filePath[1]
+    else
+      error("not enough input arguments for rossetta()")
+    end
     # read the m-file
     mFileContents = open(readlines, inputMfilePath)
 
@@ -72,12 +81,15 @@ module Support
                 "#The code generated need further corrections by you. Execute it line by line and correct the errors.\n\r";
                 "using MatlabCompat\n\r using MatlabCompat.ImageTools\n\r using MatlabCompat.MathTools\n\r"];
     mFileContentsParsed = vcat(extraLines,mFileContentsParsed)
-
+    if length(filePath) >= 2
     # write the jl-file
      jlFileStream = open(outputJlFilePath, "w")
      write(jlFileStream, mFileContentsParsed);
      close(jlFileStream);
-    return mFileContentsParsed;
+    elseif length(filePath) == 1
+      return mFileContentsParsed;
+    else
+      return false
   end
 
 

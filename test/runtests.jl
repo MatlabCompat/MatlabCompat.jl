@@ -34,6 +34,11 @@ println("testing graythresh()");
 println("testing im2bw()");
 @test sum(reinterpret(Float32, float32(im2bw(img, trueThreshold)))[:]) == trueBWSum;
 
+println("testing imread()");
+img2 = imread("http://matlabcompat.github.io/img/example.tif");
+typeof(img2) == :Image{Gray{UfixedBase{Uint8,8}},2,Array{Gray{UfixedBase{Uint8,8}},2}}
+@test
+
 ################################
 #     Support Module Tests
 ################################
@@ -64,7 +69,7 @@ println("testing load()");
 #     StringTools Module Tests
 ################################
 println("testing disp()");
-#@test disp();
+@test disp() == true;
 
 println("testing num2str()");
 @test num2str(3) == "3";

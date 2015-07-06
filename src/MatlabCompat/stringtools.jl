@@ -27,6 +27,7 @@ module StringTools
   # wrapper for the disp function
   function disp(string)
     println(string)
+    return true
   end
 
   # covert number to a string in a MATLAB style

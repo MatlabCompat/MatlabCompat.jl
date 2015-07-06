@@ -13,8 +13,8 @@ module ImageTools
 # grayim(array) or colorim(array).
 #
 #
-# Copyright © 2014-2015 Artur Yakimovich. 
-#   
+# Copyright © 2014-2015 Artur Yakimovich.
+#
 #  MIT license.
 #
 # Permission is hereby granted, free of charge, to any person
