@@ -120,7 +120,7 @@ module ImageTools
 
   function imshow(image)
     # wrapper for ImageView.view, need to add convertion of image to array and back
-    ImageView.view(image)
+    ImageView.display(image)
   end
 
   function imread(path)
