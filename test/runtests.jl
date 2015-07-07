@@ -4,6 +4,7 @@ using MatlabCompat.MathTools
 using Base.Test
 using Images
 using FixedPointNumbers
+using Tk
 
 
 

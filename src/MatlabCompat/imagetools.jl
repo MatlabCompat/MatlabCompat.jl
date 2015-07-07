@@ -45,6 +45,7 @@ module ImageTools
 
   include("imagetools/morph.jl")
 
+  using Tk
   using Images
   using FixedPointNumbers
   using ImageView
@@ -120,7 +121,7 @@ module ImageTools
 
   function imshow(image)
     # wrapper for ImageView.view, need to add convertion of image to array and back
-    ImageView.display(image)
+    ImageView.view(image)
   end
 
   function imread(path)
