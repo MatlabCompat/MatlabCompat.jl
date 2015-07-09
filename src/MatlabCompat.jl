@@ -42,6 +42,9 @@ module MatlabCompat
   const imshow = ImageTools.imshow
   const imread = ImageTools.imread
   const bwlabel = ImageTools.bwlabel
+  const jet = ImageTools.jet
+  const hsv = ImageTools.hsv
+  const label2rgb = ImageTools.label2rgb
   const mat2im = Support.mat2im
   const im2mat = Support.im2mat
   const rossetta = Support.rossetta
