@@ -156,8 +156,7 @@ function bwlabel(inputImage,connectivity)
     error("Invalid pixel connectivity. Pixel connectivity can be either 4 or 8");
   end
 
-
-  labeledImage = label_components(inputImage,connectivityMatrix);
+  labeledImage = label_components(inputImage,connectivityMatrix)'; #transposing to be consistent with original input Image
 
 
   return labeledImage;
