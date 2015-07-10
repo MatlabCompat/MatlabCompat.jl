@@ -31,6 +31,7 @@ imgbw = im2bw(img, threshold); % create a binary image based on the graysacel im
 imshow(imgbw); % display the resulting binary image
 labledbw = bwlabel(imgbw, 4); % lable each connected object in the image
 numberOfCells = max(reshape(labledbw, 1,numel(labledbw))); % count cells
-disp(strcat('number of objects:', num2str(numberOfCells))); % display the number of objects
+disp(strcat('number of objects:', num2str(numberOfCells)));% display the number of objects
+imshow(label2rgb(labledbw))
 toc()
 

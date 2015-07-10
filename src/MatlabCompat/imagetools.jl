@@ -182,7 +182,7 @@ function hsv(numberOfColors::Int64)
 
 end
 
-function label2rgb(labeledMatrix, inputColorMap = "jet",backgroundColor = [0 0 0], isShuffled = "noshuffle")
+function label2rgb(labeledMatrix, inputColorMap = "jet",backgroundColor = [1 1 1], isShuffled = "noshuffle")
 
 
   #check if the labeledMatrix contains only integers
