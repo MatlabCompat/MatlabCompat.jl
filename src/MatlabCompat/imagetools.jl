@@ -45,14 +45,14 @@ jet,
 hsv,
 label2rgb
 
-
 include("imagetools/morph.jl")
 
-using Tk
-using Images
-using FixedPointNumbers
-using ImageView
-using Color
+import Tk
+import Images
+import Images: properties, data, label_components
+import FixedPointNumbers
+import ImageView
+import Color
 
 function graythresh(img)
 
@@ -165,8 +165,8 @@ end
 
 function jet(numberOfColors::Int64)
   #Generate matlab-like jet colormap with specified amount of colors
-  return jetColorMap = RGB{Float64}[
-    RGB(
+  return jetColorMap = Color.RGB{Float64}[
+    Color.RGB(
       clamp(min(4*ellement - 1.5, -4*ellement + 4.5) ,0.0,1.0),
       clamp(min(4*ellement - 0.5, -4*ellement + 3.5) ,0.0,1.0),
       clamp(min(4*ellement + 0.5, -4*ellement + 2.5) ,0.0,1.0))
@@ -198,7 +198,7 @@ function label2rgb(labeledMatrix, inputColorMap = "jet",backgroundColor = [1 1 1
   elseif inputColorMap == "hsv"
     currentColormap =  hsv(numberOfEllements);
     #check if custom colormap is loaded
-  elseif is(typeof(inputColorMap),Array{RGB,1})
+  elseif is(typeof(inputColorMap),Array{Color.RGB,1})
 
     if length(inputColorMap) == maximum(labeledMatrix)
       currentColormap = inputColorMap;
@@ -210,7 +210,7 @@ function label2rgb(labeledMatrix, inputColorMap = "jet",backgroundColor = [1 1 1
   end
 
   #convert input backgroundColor to RGB type
-  backgroundColor = RGB(backgroundColor[1],backgroundColor[2],backgroundColor[3]);
+  backgroundColor = Color.RGB(backgroundColor[1],backgroundColor[2],backgroundColor[3]);
 
   if  isShuffled == "shuffle"
     #shuffle the colormap
@@ -225,8 +225,8 @@ function label2rgb(labeledMatrix, inputColorMap = "jet",backgroundColor = [1 1 1
     currentColormap = [backgroundColor,currentColormap[1:end-1]];
   end
 
-  indexedImage = ImageCmap(labeledMatrix, currentColormap);
-  outputRGB = convert(Image, indexedImage);
+  indexedImage = Images.ImageCmap(labeledMatrix, currentColormap);
+  outputRGB = convert(Images.Image, indexedImage);
 
 
   return outputRGB;

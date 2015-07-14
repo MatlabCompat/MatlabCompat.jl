@@ -24,8 +24,8 @@ module Io
   # SOFTWARE.
   export load
 
-  using MAT
-  using FixedPointNumbers
+  import MAT
+  import FixedPointNumbers
 
   #wrapper MATLAB/Octave load function based on MAT.jl library,
   #for mat files returns the closes analogue to a struct array - Dictionary type
