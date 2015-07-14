@@ -27,9 +27,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 using MatlabCompat
-using MatlabCompat.ImageTools
+importall MatlabCompat.ImageTools
 importall MatlabCompat.MathTools
-# import MatlabCompat.MathTools.max
 
 tic()
 img = imread("http://matlabcompat.github.io/img/example.tif"); # read the remote image
