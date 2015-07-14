@@ -53,6 +53,7 @@ import Images: properties, data, label_components
 import FixedPointNumbers
 import ImageView
 import Color
+import BinDeps
 
 function graythresh(img)
 
@@ -131,7 +132,17 @@ end
 function imread(path)
   # wrapper for Images.imread with added image retrieval from url functionality
   if (ismatch(r"http://.*", path) || ismatch(r"https://.*", path) || ismatch(r"ftp://.*", path)|| ismatch(r"smb://.*", path))
-    imageContainer = download(path);
+    imageContainer = nothing
+    if VERSION < v"0.4-"
+      imageContainer = download(path);
+    else
+      # By default, do silent download.
+      url = path
+      path = tempname()
+      cmd = BinDeps.download_cmd(url, path)
+      run(pipe(cmd, stdout=DevNull, stderr=DevNull));
+      imageContainer = path
+    end
   else
     imageContainer = path;
   end
