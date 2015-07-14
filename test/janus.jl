@@ -35,7 +35,7 @@ tic()
 img = imread("http://matlabcompat.github.io/img/example.tif"); # read the remote image
 #img = imread("D:\github\matlabcompat.github.io\img\example.tif");
 threshold = graythresh(img); # compute graysacale threshold using Otsu algorithm
-imgbw = im2bw(img, threshold); # create a binary image based on the graysacel image
+imgbw = im2bw(img, threshold); # create a binary image based on the grayscale image
 imshow(imgbw); # display the resulting binary image
 labledbw = bwlabel(imgbw, 4); # lable each connected object in the image
 numberOfCells = max(reshape(labledbw, 1,numel(labledbw))); # count cells
