@@ -60,13 +60,11 @@ function graythresh(img)
   if isempty(img)
     error("Image is empty");
   end
-  if properties(img)["IMcs"] != "Gray";
-    error("Image must be grayscale. If your image is grayscale consider adding properties(img)[\"IMcs\"] = \"Gray\";");
-  end
-  #Convert image to an array and compute it's histogram
-  image_array = reinterpret(Float32, float32(img));
 
-  expected_number_of_bins = 2^16;
+  #Convert image to 8bit and return it's raw values to compute the histogram
+  image_array = raw(map(Gray{Ufixed8},img));
+  expected_number_of_bins = 2^8;
+
   (range, counts) = hist(image_array[:],expected_number_of_bins);
   #get real number of bins to be used below
   number_of_bins = size(counts)[1];
@@ -88,7 +86,7 @@ function graythresh(img)
     index = findfirst(sigma_b_squared, maxvalue);
 
     # Normalize the threshold to the range [0, 1].
-    threshold = (index - 1) / (number_of_bins - 1);
+    threshold = (index - 1) / (expected_number_of_bins - 1);
   else
     threshold = 0.0;
   end
@@ -98,10 +96,6 @@ end
 
 function im2bw(img, threshold)
 
-  if properties(img)["IMcs"] != "Gray";
-    error("Image must be grayscale");
-  end
-
   if typeof(threshold) != Float64 && typeof(threshold) != Float32 && typeof(threshold) != Float16
     error("Threshold must be of types Float64, Float32 or Float16");
   end
@@ -110,18 +104,18 @@ function im2bw(img, threshold)
   end
 
   m,n = size(img);
-  blacknWhite = img;
+  blacknWhite = falses(n,m)
+  imageData = data(img);
+
   for i = 1:m
     for j = 1:n
-      if data(img)[i,j] >= threshold
-        data(blacknWhite)[i,j] = 1;
-      else
-        data(blacknWhite)[i,j] = 0;
+      if imageData >= threshold
+        blacknWhite[i,j] = true;
       end
     end
   end
 
-  return bool(blacknWhite)
+  return Image(blacknWhite, colorspace = "Binary")
 end
 
 function imshow(image)
@@ -152,11 +146,6 @@ end
 
 function bwlabel(inputImage,connectivity)
   # wrapper for Images.label_components
-
-  #check if the input Image is black and white
-  if (typeof(inputImage) != Images.Image{Bool,2,Array{Bool,2}})
-    error("Invalid input image. Input image is not black and white");
-  end
 
   #define pixel connectivity matrices for appropriate inputs
   if connectivity == 4
