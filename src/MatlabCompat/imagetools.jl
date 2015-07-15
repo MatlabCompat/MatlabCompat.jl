@@ -63,14 +63,15 @@ function graythresh(img)
     error("Image is empty");
   end
   #Check whether the input image is gray
+
   if Images.colorspace(img) != "Gray"
     error("Input Image should be grayscale")
   end
 
-  if isa(raw(testImage),Array{Uint16,2})
+  if isa(raw(img),Array{Uint16,2})
     #Convert image to 8bit and return it's raw values to compute the histogram
     image_array = map(Images.BitShift(Uint8,8),raw(img));
-  elseif isa(raw(testImage),Array{Uint8,2})
+  elseif isa(raw(img),Array{Uint8,2})
     image_array = raw(img);
   else
     warn("Input Image is neither Uint8 or Uint16");
