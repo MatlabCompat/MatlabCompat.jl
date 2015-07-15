@@ -3,7 +3,7 @@
 % to work in Julia and MATLAB without
 % changing its syntax
 %
-% Copyright © Vardan Andriasyan, Yauhen Yakimovich, Artur Yakimovich 2015
+% Copyright ï¿½ Vardan Andriasyan, Yauhen Yakimovich, Artur Yakimovich 2015
 % MIT license.
 %
 % Permission is hereby granted, free of charge, to any person
@@ -23,11 +23,11 @@
 % LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 % OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 % SOFTWARE.
-tic() 
+tic()
 img = imread('http://matlabcompat.github.io/img/example.tif'); % read the remote image
 %img = imread('D:\github\matlabcompat.github.io\img\example.tif');
 threshold = graythresh(img); % compute graysacale threshold using Otsu algorithm
-imgbw = im2bw(img, threshold); % create a binary image based on the graysacel image
+imgbw = im2bw(img, threshold); % create a binary image based on the grayscale image
 imshow(imgbw); % display the resulting binary image
 labeledbw = bwlabel(imgbw, 4); % lable each connected object in the image
 numberOfCells = max(reshape(labeledbw, 1,numel(labeledbw))); % count cells

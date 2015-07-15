@@ -37,7 +37,12 @@ println("testing im2bw()");
 
 println("testing imread()");
 img2 = MatlabCompat.imread("http://matlabcompat.github.io/img/example.tif");
-@test "$(typeof(img2))" == "Image{Gray{UfixedBase{Uint8,8}},2,Array{Gray{UfixedBase{Uint8,8}},2}}";
+if VERSION < v"0.4"
+    expected = "Image{Gray{UfixedBase{Uint8,8}},2,Array{Gray{UfixedBase{Uint8,8}},2}}";
+else
+    expected = "Images.Image{Images.ColorTypes.Gray{FixedPointNumbers.UfixedBase{UInt8,8}},2,Array{Images.ColorTypes.Gray{FixedPointNumbers.UfixedBase{UInt8,8}},2}}";
+end
+@test "$(typeof(img2))" == expected;
 
 ################################
 #     Support Module Tests
