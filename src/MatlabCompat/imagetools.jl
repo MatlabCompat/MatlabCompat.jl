@@ -104,8 +104,6 @@ function im2bw(img, threshold)
   end
 
   m,n = size(img);
-  print(n)
-  print(m)
   blacknWhite = falses(n,m)
   imageData = data(img);
 
