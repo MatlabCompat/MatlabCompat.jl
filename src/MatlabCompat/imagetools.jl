@@ -116,7 +116,7 @@ end
 
 function im2bw(img, threshold)
 
-if colorspace(img) != "Gray"
+if Images.colorspace(img) != "Gray"
     error("Input Image should be grayscale")
   end
 
@@ -139,7 +139,7 @@ if colorspace(img) != "Gray"
     end
   end
 
-  return Image(blacknWhite, colorspace = "Binary")
+  return Images.Image(blacknWhite, colorspace = "Binary")
 end
 
 function imshow(image)
