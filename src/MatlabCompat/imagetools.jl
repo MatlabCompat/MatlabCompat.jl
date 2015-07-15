@@ -49,7 +49,7 @@ include("imagetools/morph.jl")
 
 import Tk
 import Images
-import Images: properties, data, raw, label_components, colorspac
+import Images: properties, data, raw, label_components
 import FixedPointNumbers
 import ImageView
 import Color
