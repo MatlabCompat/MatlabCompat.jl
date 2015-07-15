@@ -49,7 +49,7 @@ include("imagetools/morph.jl")
 
 import Tk
 import Images
-import Images: properties, data, label_components
+import Images: properties, data, raw, label_components
 import FixedPointNumbers
 import ImageView
 import Color
@@ -104,8 +104,6 @@ function im2bw(img, threshold)
   end
 
   m,n = size(img);
-  print(n)
-  print(m)
   blacknWhite = falses(n,m)
   imageData = data(img);
 
