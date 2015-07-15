@@ -104,12 +104,14 @@ function im2bw(img, threshold)
   end
 
   m,n = size(img);
+  print(n)
+  print(m)
   blacknWhite = falses(n,m)
   imageData = data(img);
 
-  for i = 1:m
-    for j = 1:n
-      if imageData >= threshold
+  for i = 1:n
+    for j = 1:m
+      if imageData[j,i] > threshold
         blacknWhite[i,j] = true;
       end
     end
