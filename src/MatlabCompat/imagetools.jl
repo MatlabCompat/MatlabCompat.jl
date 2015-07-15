@@ -63,6 +63,7 @@ function graythresh(img)
     error("Image is empty");
   end
   #Check whether the input image is gray
+
   if Images.colorspace(img) != "Gray"
     error("Input Image should be grayscale")
   end
