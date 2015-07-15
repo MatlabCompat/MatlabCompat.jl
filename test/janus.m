@@ -32,6 +32,6 @@ imshow(imgbw); % display the resulting binary image
 labeledbw = bwlabel(imgbw, 4); % lable each connected object in the image
 numberOfCells = max(reshape(labeledbw, 1,numel(labeledbw))); % count cells
 disp(strcat('number of objects:', num2str(numberOfCells)));% display the number of objects
-imshow(label2rgb(labeledbw))
+imshow(label2rgb(labeledbw,'jet',[0 0 0],'shuffle'));
 toc()
 
