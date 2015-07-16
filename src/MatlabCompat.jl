@@ -23,7 +23,7 @@ module MatlabCompat
   export ImageTools, Support, Io, StringTools, MathTools
   export mat2im,
          im2mat,
-         rossetta,
+         rosetta,
          load,
          disp,
          num2str,
@@ -47,7 +47,7 @@ module MatlabCompat
   const label2rgb = ImageTools.label2rgb
   const mat2im = Support.mat2im
   const im2mat = Support.im2mat
-  const rossetta = Support.rossetta
+  const rosetta = Support.rosetta
   const load = Io.load
   const disp = StringTools.disp
   const num2str = StringTools.num2str

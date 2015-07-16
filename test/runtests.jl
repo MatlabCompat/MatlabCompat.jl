@@ -66,8 +66,8 @@ else
 end
 @test "$(typeof(mat2im(img)))" == expected; 
 
-println("testing rossetta()");
-@test "$(typeof(rossetta(JANUS_PATH)))" == "Array{UTF8String,1}";
+println("testing rosetta()");
+@test "$(typeof(rosetta(JANUS_PATH)))" == "Array{UTF8String,1}";
 
 
 
