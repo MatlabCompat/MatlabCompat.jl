@@ -1,4 +1,6 @@
-module MatlabCompat
+module Io
+  # this module contains input/output functions
+
   # Copyright © 2014-2015 Vardan Andriasyan, Yauhen Yakimovich, Artur Yakimovich.
   #
   #  MIT license.
@@ -20,43 +22,36 @@ module MatlabCompat
   # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
   # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   # SOFTWARE.
-  export ImageTools, Support, Io, StringTools, MathTools
-  export mat2im,
-         im2mat,
-         rosetta,
-         load,
-         disp,
-         num2str,
-         strcat,
-         numel
+  export load
 
+  import MAT
+  import FixedPointNumbers
 
-  # Include submodules of the package.
-  for file in split("imagetools support io stringtools mathtools")
-      include("MatlabCompat/$file.jl")
+  #wrapper MATLAB/Octave load function based on MAT.jl library,
+  #for mat files returns the closes analogue to a struct array - Dictionary type
+  function load(matFile, treatAs = "-mat", variable = "all")
+    if treatAs == "-mat"
+      #load all variables as a Dictionary type - the closes analogue to struct array
+      allData = MAT.matread(matFile)
+
+      if variable == "all"
+        matFileDict = allData
+      elseif variable != "all"
+        if variable in keys(allData)
+          matFileDict = allData[variable]
+        else
+          error("specified variable doesn't exist in the mat file")
+        end
+      end
+
+    elseif treatAs == "-ascii"
+      # load the ascii file and return an array of Float64 type
+      fileContent = open(readlines, matFile)
+      matFileDict = map(parse, fileContent)
+    else
+      error("unknown type specified in the second argument")
+    end
+
+    return matFileDict
   end
-
-  # Alias some functions.
-  const graythresh = ImageTools.graythresh
-  const im2bw = ImageTools.im2bw
-  const imshow = ImageTools.imshow
-  const imread = ImageTools.imread
-  const bwlabel = ImageTools.bwlabel
-  const jet = ImageTools.jet
-  const hsv = ImageTools.hsv
-  const label2rgb = ImageTools.label2rgb
-  const mat2im = Support.mat2im
-  const im2mat = Support.im2mat
-  const rosetta = Support.rosetta
-  const load = Io.load
-  const disp = StringTools.disp
-  const num2str = StringTools.num2str
-  const strcat = StringTools.strcat
-  const numel = MathTools.numel
-  const max = MathTools.max
-  # imported/included inside ImageTools
-  const strel = ImageTools.Morph.strel
-  const imread = ImageTools.imread
-  # imported/included inside MathTools
-  const max = MathTools.max
-end # module
+end #End of Io

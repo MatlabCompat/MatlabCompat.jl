@@ -1,4 +1,6 @@
-module MatlabCompat
+module StringTools
+  # this module contains string functions
+
   # Copyright © 2014-2015 Vardan Andriasyan, Yauhen Yakimovich, Artur Yakimovich.
   #
   #  MIT license.
@@ -20,43 +22,29 @@ module MatlabCompat
   # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
   # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   # SOFTWARE.
-  export ImageTools, Support, Io, StringTools, MathTools
-  export mat2im,
-         im2mat,
-         rosetta,
-         load,
-         disp,
-         num2str,
-         strcat,
-         numel
-
-
-  # Include submodules of the package.
-  for file in split("imagetools support io stringtools mathtools")
-      include("MatlabCompat/$file.jl")
+  export disp
+  export num2str
+  export strcat
+  # wrapper for the disp function
+  function disp(string)
+    println(string)
+    return true
   end
 
-  # Alias some functions.
-  const graythresh = ImageTools.graythresh
-  const im2bw = ImageTools.im2bw
-  const imshow = ImageTools.imshow
-  const imread = ImageTools.imread
-  const bwlabel = ImageTools.bwlabel
-  const jet = ImageTools.jet
-  const hsv = ImageTools.hsv
-  const label2rgb = ImageTools.label2rgb
-  const mat2im = Support.mat2im
-  const im2mat = Support.im2mat
-  const rosetta = Support.rosetta
-  const load = Io.load
-  const disp = StringTools.disp
-  const num2str = StringTools.num2str
-  const strcat = StringTools.strcat
-  const numel = MathTools.numel
-  const max = MathTools.max
-  # imported/included inside ImageTools
-  const strel = ImageTools.Morph.strel
-  const imread = ImageTools.imread
-  # imported/included inside MathTools
-  const max = MathTools.max
-end # module
+  # covert number to a string in a MATLAB style
+  function num2str(number)
+    string = "$number"
+    return string
+  end
+
+  # wrapper for the Julia function string for compatibility with MATLAB syntax
+  function strcat(stringsToAdd...)
+    concatenatedString = ""
+    for i in 1:length(stringsToAdd)
+      concatenatedString = string(concatenatedString, stringsToAdd[i])
+    end
+    return concatenatedString
+  end
+
+
+end #End of StringTools
