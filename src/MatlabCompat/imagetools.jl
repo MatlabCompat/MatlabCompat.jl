@@ -57,15 +57,35 @@ import BinDeps
 
 function graythresh(img)
 
+
+  #Check whether the input image is empty
   if isempty(img)
     error("Image is empty");
   end
+  #Check whether the input image is gray
 
-  #Convert image to 8bit and return it's raw values to compute the histogram
-  image_array = raw(map(Gray{Ufixed8},img));
+  if Images.colorspace(img) != "Gray"
+    error("Input Image should be grayscale")
+  end
+
+  if isa(raw(img),Array{Uint16,2})
+    #Convert image to 8bit and return it's raw values to compute the histogram
+    image_array = map(Images.BitShift(Uint8,8),raw(img));
+  elseif isa(raw(img),Array{Uint8,2})
+    image_array = raw(img);
+  else
+    warn("Input Image is neither Uint8 or Uint16");
+    image_array = raw(img);
+  end
+  #image_array = raw(img)
+
+
+
   expected_number_of_bins = 2^8;
 
-  (range, counts) = hist(image_array[:],expected_number_of_bins);
+
+  (range, counts) = hist(reshape(image_array,length(image_array)),expected_number_of_bins);
+
   #get real number of bins to be used below
   number_of_bins = size(counts)[1];
   #Next the algorithm implementation according to the original paper
@@ -96,6 +116,10 @@ end
 
 function im2bw(img, threshold)
 
+if Images.colorspace(img) != "Gray"
+    error("Input Image should be grayscale")
+  end
+
   if typeof(threshold) != Float64 && typeof(threshold) != Float32 && typeof(threshold) != Float16
     error("Threshold must be of types Float64, Float32 or Float16");
   end
@@ -115,7 +139,7 @@ function im2bw(img, threshold)
     end
   end
 
-  return Image(blacknWhite, colorspace = "Binary")
+  return Images.Image(blacknWhite, colorspace = "Binary")
 end
 
 function imshow(image)
