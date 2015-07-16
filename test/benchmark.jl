@@ -28,7 +28,9 @@ using MatlabCompat.MathTools
 
 using Images,FixedPointNumbers
 
+
 numberOfIterations = 1000;
+
 innerExecutionTimes = Float64[0];
 outerExecutionTimes = Float64[0];
 img = imread("C:\\Users\\Vardan\\Documents\\Julia\\matlabcompat.github.io\\img\\example.tif");
@@ -43,7 +45,9 @@ end
 
 
 function forSimpleJanus()
+
   numberOfIterations = 1000;
+
   for j=1:numberOfIterations
     simpleJanus();
   end
