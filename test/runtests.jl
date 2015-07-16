@@ -1,12 +1,16 @@
+using Base
 using MatlabCompat
 using MatlabCompat.ImageTools
-using MatlabCompat.MathTools
+import MatlabCompat.MathTools
+import MatlabCompat.MathTools: max
 using Base.Test
 using Images
 using FixedPointNumbers
 using Tk
 
-TEST_FOLDER = dirname(@__FILE__)
+const TEST_FOLDER = dirname(@__FILE__)
+const JANUS_PATH = joinpath(TEST_FOLDER, "janus.m");
+const TESTMAT_PATH = joinpath(TEST_FOLDER, "test.mat");
 
 # basic test
 println("foo test")
@@ -37,7 +41,8 @@ println("testing im2bw()");
 
 println("testing imread()");
 img2 = MatlabCompat.imread("http://matlabcompat.github.io/img/example.tif");
-if VERSION < v"0.4"
+expected = nothing
+if VERSION < v"0.4-"
     expected = "Image{Gray{UfixedBase{Uint8,8}},2,Array{Gray{UfixedBase{Uint8,8}},2}}";
 else
     expected = "Images.Image{Images.ColorTypes.Gray{FixedPointNumbers.UfixedBase{UInt8,8}},2,Array{Images.ColorTypes.Gray{FixedPointNumbers.UfixedBase{UInt8,8}},2}}";
@@ -53,10 +58,15 @@ mat = im2mat(img)
 @test "$(typeof(mat))" == "Array{Float32,2}";
 
 println("testing mat2im()");
-@test "$(typeof(mat2im(img)))" == "Image{Float64,2,Array{Float64,2}}";
+expected = nothing
+if (VERSION < v"0.4-")
+    expected = "Image{Float64,2,Array{Float64,2}}"
+else
+    expected = "Images.Image{Float64,2,Array{Float64,2}}"
+end
+@test "$(typeof(mat2im(img)))" == expected; 
 
 println("testing rossetta()");
-JANUS_PATH = joinpath(TEST_FOLDER, "janus.m")
 @test "$(typeof(rossetta(JANUS_PATH)))" == "Array{UTF8String,1}";
 
 
@@ -66,7 +76,8 @@ JANUS_PATH = joinpath(TEST_FOLDER, "janus.m")
 ################################
 
 println("testing load()");
-@test "$(typeof(load("test.mat")))" == "Dict{ASCIIString,Any}";
+println("$(typeof(load(TESTMAT_PATH)))")
+@test "$(typeof(load(TESTMAT_PATH)))" == "Dict{ASCIIString,Any}";
 # "$(typeof(A))" == "Dict{Any,Any}"
 
 ################################

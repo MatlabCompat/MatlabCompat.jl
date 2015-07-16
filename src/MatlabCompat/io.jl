@@ -32,7 +32,7 @@ module Io
   function load(matFile, treatAs = "-mat", variable = "all")
     if treatAs == "-mat"
       #load all variables as a Dictionary type - the closes analogue to struct array
-      allData = matread(matFile)
+      allData = MAT.matread(matFile)
 
       if variable == "all"
         matFileDict = allData
