@@ -32,13 +32,12 @@ importall MatlabCompat.MathTools
 
 tic()
 img = imread("http://matlabcompat.github.io/img/example.tif"); # read the remote image
-#img = imread("D:\github\matlabcompat.github.io\img\example.tif");
 threshold = graythresh(img); # compute graysacale threshold using Otsu algorithm
 imgbw = im2bw(img, threshold); # create a binary image based on the grayscale image
 imshow(imgbw); # display the resulting binary image
-labledbw = bwlabel(imgbw, 4); # lable each connected object in the image
-numberOfCells = max(reshape(labledbw, 1,numel(labledbw))); # count cells
-disp(strcat("number of objects:", num2str(numberOfCells)));
-imshow(label2rgb(labeledbw,"jet",[1 1 1],"shuffle")# display the number of objects
+labeledbw = bwlabel(imgbw, 4); # label each connected object in the image
+numberOfCells = max(reshape(labeledbw, 1,numel(labeledbw))); # count cells
+disp(strcat("number of objects:", num2str(numberOfCells)));# display the number of objects
+imshow(label2rgb(labeledbw,"jet",[1 1 1],"shuffle"));
 toc()
 
