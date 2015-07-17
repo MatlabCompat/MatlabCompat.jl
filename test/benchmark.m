@@ -20,26 +20,28 @@
 % OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 % SOFTWARE.
 
-numberOfIterations = 1000;
+numberOfOuterIterations = 10;
+numberInnerOfIterations =10000;
 outerExecutionTimes=0;
 innerExecutionTimes=0;
 img = imread('http://matlabcompat.github.io/img/example.tif');
   
 i=1;
 
-for i = 1:numberOfIterations
-    outer = tic();
-for j = 1:numberOfIterations
+% for i = 1:numberOfOuterIterations
+%     outer = tic();
+for j = 1:numberInnerOfIterations
      inner = tic();
 threshold = graythresh(img); % compute graysacale threshold using Otsu algorithm
 imgbw = im2bw(img, threshold); % create a binary image based on the graysacel image
 labeledbw = bwlabel(imgbw, 4); % lable each connected object in the image
-numberOfCells = max(reshape(labeledbw, 1,numel(labeledbw))); % count cells
- innerExecutionTimes(j) =toc(inner);
+% numberOfCells = max(reshape(labeledbw, 1,numel(labeledbw))); % count cells
+  innerExecutionTimes(j) =toc(inner);
 end
-outerExecutionTimes(i)=toc(outer);
-end
+% outerExecutionTimes(i)=toc(outer);
+% 
+% end
 
 
 disp([median(innerExecutionTimes) std(innerExecutionTimes)]);
-disp([median(outerExecutionTimes) std(outerExecutionTimes)]);
+% disp([median(outerExecutionTimes) std(outerExecutionTimes)]);
