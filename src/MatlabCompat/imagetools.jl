@@ -52,7 +52,7 @@ import Images
 import Images: properties, data, raw, label_components
 import FixedPointNumbers
 import ImageView
-import Color
+import Colors
 import BinDeps
 
 function graythresh(img)
@@ -189,8 +189,8 @@ end
 
 function jet(numberOfColors::Int64)
   #Generate matlab-like jet colormap with specified amount of colors
-  return jetColorMap = Color.RGB{Float64}[
-    Color.RGB(
+  return jetColorMap = Colors.RGB{Float64}[
+    Colors.RGB(
       clamp(min(4*ellement - 1.5, -4*ellement + 4.5) ,0.0,1.0),
       clamp(min(4*ellement - 0.5, -4*ellement + 3.5) ,0.0,1.0),
       clamp(min(4*ellement + 0.5, -4*ellement + 2.5) ,0.0,1.0))
@@ -201,7 +201,7 @@ end
 
 function hsv(numberOfColors::Int64)
   #Generate matlab-like hsv colormap with specified amount of colors
-  return hsvColorMap = linspace(Color.HSV(0,1,1),Color.HSV(330,1,1),numberOfColors);
+  return hsvColorMap = linspace(Colors.HSV(0,1,1),Colors.HSV(330,1,1),numberOfColors);
 
 end
 
@@ -222,7 +222,7 @@ function label2rgb(labeledMatrix, inputColorMap = "jet",backgroundColor = [1 1 1
   elseif inputColorMap == "hsv"
     currentColormap =  hsv(numberOfEllements);
     #check if custom colormap is loaded
-  elseif is(typeof(inputColorMap),Array{Color.RGB,1})
+  elseif is(typeof(inputColorMap),Array{Colors.RGB,1})
 
     if length(inputColorMap) == maximum(labeledMatrix)
       currentColormap = inputColorMap;
@@ -234,7 +234,7 @@ function label2rgb(labeledMatrix, inputColorMap = "jet",backgroundColor = [1 1 1
   end
 
   #convert input backgroundColor to RGB type
-  backgroundColor = Color.RGB(backgroundColor[1],backgroundColor[2],backgroundColor[3]);
+  backgroundColor = Colors.RGB(backgroundColor[1],backgroundColor[2],backgroundColor[3]);
 
   if  isShuffled == "shuffle"
     #shuffle the colormap
