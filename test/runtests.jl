@@ -1,5 +1,6 @@
 using Base
 using MatlabCompat
+using MatlabCompat.Io
 using MatlabCompat.ImageTools
 import MatlabCompat.MathTools
 import MatlabCompat.MathTools: max
@@ -45,8 +46,8 @@ expected = nothing
 if VERSION < v"0.4-"
     expected = "Image{Gray{UfixedBase{Uint8,8}},2,Array{Gray{UfixedBase{Uint8,8}},2}}";
 else
-    expected = "Images.Image{Images.ColorTypes.Gray{FixedPointNumbers.UfixedBase{UInt8,8}},2,Array{Images.ColorTypes.Gray{FixedPointNumbers.UfixedBase{UInt8,8}},2}}";
-end
+    expected = "Images.Image{ColorTypes.Gray{FixedPointNumbers.UFixed{UInt8,8}},2,Array{ColorTypes.Gray{FixedPointNumbers.UFixed{UInt8,8}},2}}"
+	end
 @test "$(typeof(img2))" == expected;
 
 ################################
@@ -76,8 +77,8 @@ println("testing rosetta()");
 ################################
 
 println("testing load()");
-println("$(typeof(load(TESTMAT_PATH)))")
-@test "$(typeof(load(TESTMAT_PATH)))" == "Dict{ASCIIString,Any}";
+println("$(typeof(MatlabCompat.load(TESTMAT_PATH)))")
+@test "$(typeof(MatlabCompat.load(TESTMAT_PATH)))" == "Dict{ASCIIString,Any}";
 # "$(typeof(A))" == "Dict{Any,Any}"
 
 ################################
