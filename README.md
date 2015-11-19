@@ -17,6 +17,7 @@ However, as a word of caution Julia is not MATLAB/Octave and was never meant to 
 
 We use following Julia packages:
 
+julia 0.4
 Tk
 Images
 ImageView
@@ -24,6 +25,9 @@ FixedPointNumbers
 MAT
 Color
 BinDeps
+ImageMagick
+
+Also see REQUIRE file for details.
 
 ### Package [Help can be found here](http://matlabcompat.github.io/help.html)
 
