@@ -147,7 +147,7 @@ function imshow(image)
   ImageView.view(image)
 end
 
-function imread(path)
+function imread(path)  
   # wrapper for Images.imread with added image retrieval from url functionality
   if (ismatch(r"http://.*", path) || ismatch(r"https://.*", path) || ismatch(r"ftp://.*", path)|| ismatch(r"smb://.*", path))
     imageContainer = nothing
@@ -158,12 +158,12 @@ function imread(path)
       url = path
       path = tempname()
       cmd = BinDeps.download_cmd(url, path)
-      run(pipe(cmd, stdout=DevNull, stderr=DevNull));
+      run(pipe(cmd, DevNull, DevNull));      
       imageContainer = path
     end
   else
     imageContainer = path;
-  end
+  end  
   image = Images.imread(imageContainer);
   return image
 end
