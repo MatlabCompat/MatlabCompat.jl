@@ -3,7 +3,7 @@
 % to work in Julia and MATLAB without
 % changing its syntax
 %
-% Copyright Â© Vardan Andriasyan, Yauhen Yakimovich, Artur Yakimovich 2015
+% Copyright © Vardan Andriasyan, Yauhen Yakimovich, Artur Yakimovich 2015
 % MIT license.
 %
 % Permission is hereby granted, free of charge, to any person
@@ -23,14 +23,20 @@
 % LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 % OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 % SOFTWARE.
-tic()
-img = imread('http://matlabcompat.github.io/img/example.tif'); % read the remote image
-threshold = graythresh(img); % compute graysacale threshold using Otsu algorithm
-imgbw = im2bw(img, threshold); % create a binary image based on the grayscale image
-imshow(imgbw); % display the resulting binary image
-labeledbw = bwlabel(imgbw, 4); % label each connected object in the image
-numberOfCells = max(reshape(labeledbw, 1,numel(labeledbw))); % count cells
-disp(strcat('number of objects:', num2str(numberOfCells)));% display the number of objects
-imshow(label2rgb(labeledbw,'jet',[0 0 0],'shuffle'));
-toc()
+
+% read the remote images
+imgTreated = imread('http://matlabcompat.github.io/img/example_Treated.tif');
+imgNonTreated = imread('http://matlabcompat.github.io/img/example_NonTreated.tif');
+ 
+threshold = graythresh(imgNonTreated); % compute grayscale threshold of the non treated image using Otsu algorithm
+ 
+% create a binary image based on the grayscale images
+imgBWTreated = im2bw(imgTreated, threshold);
+imgBWNonTreated = im2bw(imgNonTreated, threshold);
+
+% count foreground pixels for each image and output it in console
+foregroundPixelCountTreated = sum(reshape(imgBWTreated, 1,numel(imgBWTreated)));
+foregroundPixelCountNonTreated =  sum(reshape(imgBWNonTreated, 1,numel(imgBWNonTreated)));
+display(strcat('Foreground pixel count for Treated specimen: ',num2str(foregroundPixelCountTreated)))
+display(strcat('Foreground pixel count for Non-Treated specimen: ',num2str(foregroundPixelCountNonTreated)))
 
