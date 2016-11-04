@@ -68,7 +68,7 @@ function graythresh(img)
     error("Input Image should be grayscale")
   end
 
-  if isa(raw(img),Array{Uint16,2})
+  if isa(raw(img),Array{UInt16,2})
     #Convert image to 8bit and return it's raw values to compute the histogram
     image_array = map(Images.BitShift(Uint8,8),raw(img));
   elseif isa(raw(img),Array{Uint8,2})
