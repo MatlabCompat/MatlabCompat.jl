@@ -1,5 +1,5 @@
-![MatlabCompat project](http://morphosphere.github.io/img/Logo_A_txt_aside.png)
-[![Build Status](https://travis-ci.org/morphosphere/MorphoSphere3D.svg?branch=master)](https://travis-ci.org/morphosphere/MorphoSphere3D)
+![MatlabCompat project](logo.png)
+[![Build Status](https://travis-ci.org/MatlabCompat/MatlabCompat.jl.svg?branch=master)](https://travis-ci.org/MatlabCompat/MatlabCompat.jl)
 
 # MatlabCompat.jl
 ### Julia library aimed at simplifying conversion of legacy MATLAB/Octave code into Julia by providing functions similar to MATLAB/Octave
