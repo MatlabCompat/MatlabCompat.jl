@@ -37,14 +37,16 @@ Also see REQUIRE file for details.
 
 Symlink the latest version of the package at hand. 
 
+Clone the repository:
 ```bash
-git clone https://github.com/MatlabCompat/MatlabCompat.jl && cd MatlabCompat.jl
-julia -e 'Pkg.init(); run(`ln -s $(pwd()) $(Pkg.dir("MatlabCompat"))`); Pkg.pin("MatlabCompat"); Pkg.resolve()'
+git clone https://github.com/MatlabCompat/MatlabCompat.jl
 ```
-
-> On Windows you might want to use:
-
-> mklink
+Add the repository to your Julia:
+In Julia 1.1.1:
+```jl
+using Pkg
+]add path_you_cloned 
+```
 
 If you have any troubles simply remove the folder in your home folder and try again.
 

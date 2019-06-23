@@ -4,7 +4,7 @@ using MatlabCompat.Io
 using MatlabCompat.ImageTools
 import MatlabCompat.MathTools
 import MatlabCompat.MathTools: max
-using Base.Test
+using Test
 using Images
 using FixedPointNumbers
 using Tk
@@ -43,11 +43,7 @@ println("testing im2bw()");
 println("testing imread()");
 img2 = MatlabCompat.imread("http://matlabcompat.github.io/img/example.tif");
 expected = nothing
-if VERSION < v"0.4-"
-    expected = "Image{Gray{UfixedBase{Uint8,8}},2,Array{Gray{UfixedBase{Uint8,8}},2}}";
-else
-    expected = "Images.Image{ColorTypes.Gray{FixedPointNumbers.UFixed{UInt8,8}},2,Array{ColorTypes.Gray{FixedPointNumbers.UFixed{UInt8,8}},2}}"
-	end
+expected = "Images.Image{ColorTypes.Gray{FixedPointNumbers.UFixed{UInt8,8}},2,Array{ColorTypes.Gray{FixedPointNumbers.UFixed{UInt8,8}},2}}"
 @test "$(typeof(img2))" == expected;
 
 ################################
@@ -60,7 +56,7 @@ mat = im2mat(img)
 
 println("testing mat2im()");
 expected = nothing
-if (VERSION < v"0.4-")
+if (false)
     expected = "Image{Float64,2,Array{Float64,2}}"
 else
     expected = "Images.Image{Float64,2,Array{Float64,2}}"

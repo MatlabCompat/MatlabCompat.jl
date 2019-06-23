@@ -58,7 +58,7 @@ function strel(shape::String, args...)
     if shape == "disk"
         assert(length(args) in (1,2))
         radius = args[1];
-        nhood = (length(args) == 2)? args[2] : 0;
+        nhood = (length(args) == 2) ? args[2] : 0;
         assert(isa(radius, Number) && radius > 0)
         if radius == 1
             assert(isa(nhood, Number) && nhood in (0,2,4,8))

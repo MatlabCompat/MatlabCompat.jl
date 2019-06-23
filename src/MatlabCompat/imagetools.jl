@@ -74,7 +74,7 @@ function graythresh(img)
   elseif isa(raw(img),Array{Uint8,2})
     image_array = raw(img);
   else
-    warn("Input Image is neither Uint8 or Uint16");
+    @warn("Input Image is neither Uint8 or Uint16");
     image_array = raw(img);
   end
   #image_array = raw(img)
@@ -149,18 +149,14 @@ end
 
 function imread(path)  
   # wrapper for Images.imread with added image retrieval from url functionality
-  if (ismatch(r"http://.*", path) || ismatch(r"https://.*", path) || ismatch(r"ftp://.*", path)|| ismatch(r"smb://.*", path))
+  if (occursin(r"http://.*", path) || occursin(r"https://.*", path) || occursin(r"ftp://.*", path)|| occursin(r"smb://.*", path))
     imageContainer = nothing
-    if VERSION < v"0.4-"
-      imageContainer = download(path);
-    else
-      # By default, do silent download.
-      url = path
-      path = tempname()
-      cmd = BinDeps.download_cmd(url, path)
-      run(pipe(cmd, DevNull, DevNull));      
-      imageContainer = path
-    end
+    # By default, do silent download.
+    url = path
+    path = tempname()
+    cmd = BinDeps.download_cmd(url, path)
+    run(pipe(cmd, devnull, devnull));      
+    imageContainer = path
   else
     imageContainer = path;
   end  
@@ -194,14 +190,14 @@ function jet(numberOfColors::Int64)
       clamp(min(4*ellement - 1.5, -4*ellement + 4.5) ,0.0,1.0),
       clamp(min(4*ellement - 0.5, -4*ellement + 3.5) ,0.0,1.0),
       clamp(min(4*ellement + 0.5, -4*ellement + 2.5) ,0.0,1.0))
-    for ellement in linspace(0.0,1.0,numberOfColors)];
+    for ellement in range(0.0, stop=1.0, length=numberOfColors)];
 
 end
 
 
 function hsv(numberOfColors::Int64)
   #Generate matlab-like hsv colormap with specified amount of colors
-  return hsvColorMap = linspace(Colors.HSV(0,1,1),Colors.HSV(330,1,1),numberOfColors);
+  return hsvColorMap = range(Colors.HSV(0,1,1), stop=Colors.HSV(330,1,1), length=numberOfColors);
 
 end
 

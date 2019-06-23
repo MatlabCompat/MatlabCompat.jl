@@ -49,7 +49,7 @@ function graythresh2(img)
   elseif isa(raw(img),Array{Uint8,2})
     image_array = raw(img);
   else
-    warn("Input Image is neither Uint8 or Uint16");
+    @warn("Input Image is neither Uint8 or Uint16");
     image_array = raw(img);
   end
   #image_array = raw(img)
