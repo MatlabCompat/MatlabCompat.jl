@@ -47,16 +47,24 @@ label2rgb
 
 include("imagetools/morph.jl")
 
-import Tk
+# import Tk
 import Images
-import Images: properties, data, raw, label_components
-import FixedPointNumbers
-import ImageView
+import Images: properties, data, label_components
+# import FixedPointNumbers
+import ImageView # view images for users of the Julia command-line interface (non Juno or IJulia) https://juliaimages.org/latest/install/#Displaying-images-1
 import Colors
 import BinDeps
 
-function graythresh(img)
 
+
+
+function graythresh(img)
+  # graythresh - Based on the original Paper: N. Otsu, "A Threshold Selection
+  # Method from Gray-Level Histograms" 1979. Calculates a threshold of a grayscale
+  # image, which can be used downstream to convert a grayscale image to binary
+  # image. One input argument is required - image (expected image format obtained
+  # by Images.imread, see Images package  for more information). E.g. to convert
+  # an array to image use grayim(array) or colorim(array).
 
   #Check whether the input image is empty
   if isempty(img)
@@ -68,14 +76,16 @@ function graythresh(img)
     error("Input Image should be grayscale")
   end
 
-  if isa(raw(img),Array{UInt16,2})
+# raw removed! img is converted to raw automatically
+
+  if isa(img,Array{UInt16,2})
     #Convert image to 8bit and return it's raw values to compute the histogram
-    image_array = map(Images.BitShift(Uint8,8),raw(img));
-  elseif isa(raw(img),Array{Uint8,2})
-    image_array = raw(img);
+    image_array = map(Images.BitShift(Uint8,8),img);
+  elseif isa(img,Array{Uint8,2})
+    image_array = img;
   else
     @warn("Input Image is neither Uint8 or Uint16");
-    image_array = raw(img);
+    image_array = img;
   end
   #image_array = raw(img)
 
@@ -114,7 +124,12 @@ function graythresh(img)
   return threshold
 end
 
+
 function im2bw(img, threshold)
+  # im2bw - converts image into a binary image. Input: image (expected image
+  # format obtained by Images.imread,  see Images package  for more information)
+  # and threshold (floating point number). E.g. to convert an array to image use
+  # grayim(array) or colorim(array).
 
 if Images.colorspace(img) != "Gray"
     error("Input Image should be grayscale")
@@ -147,7 +162,7 @@ function imshow(image)
   ImageView.view(image)
 end
 
-function imread(path)  
+function imread(path)
   # wrapper for Images.imread with added image retrieval from url functionality
   if (occursin(r"http://.*", path) || occursin(r"https://.*", path) || occursin(r"ftp://.*", path)|| occursin(r"smb://.*", path))
     imageContainer = nothing
@@ -155,11 +170,11 @@ function imread(path)
     url = path
     path = tempname()
     cmd = BinDeps.download_cmd(url, path)
-    run(pipe(cmd, devnull, devnull));      
+    run(pipe(cmd, devnull, devnull));
     imageContainer = path
   else
     imageContainer = path;
-  end  
+  end
   image = Images.imread(imageContainer);
   return image
 end
