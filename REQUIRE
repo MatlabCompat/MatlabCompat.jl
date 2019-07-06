@@ -1,6 +1,7 @@
-julia 1.1.1
+julia 1.0.4
 Images
 ImageView
+FileIO
 MAT
 Colors
 BinDeps

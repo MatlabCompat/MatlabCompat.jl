@@ -1,18 +1,4 @@
 module ImageTools
-#
-# graythresh - Based on the original Paper: N. Otsu, "A Threshold Selection
-# Method from Gray-Level Histograms" 1979. Calculates a threshold of a grayscale
-# image, which can be used downstream to convert a grayscale image to binary
-# image. One input argument is required - image (expected image format obtained
-# by Images.imread, see Images package  for more information). E.g. to convert
-# an array to image use grayim(array) or colorim(array).
-#
-# im2bw - converts image into a binary image. Input: image (expected image
-# format obtained by Images.imread,  see Images package  for more information)
-# and threshold (floating point number). E.g. to convert an array to image use
-# grayim(array) or colorim(array).
-#
-#
 # Copyright © 2014-2015 Vardan Andriasyan, Yauhen Yakimovich, Artur Yakimovich.
 #
 #  MIT license.
@@ -48,6 +34,7 @@ label2rgb
 include("imagetools/morph.jl")
 
 # import Tk
+import FileIO
 import Images
 import Images: properties, data, label_components
 # import FixedPointNumbers
@@ -56,8 +43,7 @@ import Colors
 import BinDeps
 
 
-
-
+################################################################
 function graythresh(img)
   # graythresh - Based on the original Paper: N. Otsu, "A Threshold Selection
   # Method from Gray-Level Histograms" 1979. Calculates a threshold of a grayscale
@@ -72,27 +58,24 @@ function graythresh(img)
   end
   #Check whether the input image is gray
 
-  if Images.colorspace(img) != "Gray"
+  if Images.eltype(img) == (Gray{Float64} || Gray{Float32} || Gray{Float16} )
     error("Input Image should be grayscale")
   end
 
-# raw removed! img is converted to raw automatically
+# raw --> rawview in Images # https://github.com/JuliaImages/ImageCore.jl/issues/83
 
-  if isa(img,Array{UInt16,2})
+  if isa(rawview(img),Array{UInt16,2})
     #Convert image to 8bit and return it's raw values to compute the histogram
-    image_array = map(Images.BitShift(Uint8,8),img);
-  elseif isa(img,Array{Uint8,2})
-    image_array = img;
+    image_array = map(Images.BitShift(Uint8,8),rawview(img));
+  elseif isa(rawview(img),Array{Uint8,2})
+    image_array = rawview(img);
   else
     @warn("Input Image is neither Uint8 or Uint16");
-    image_array = img;
+    image_array = rawview(img);
   end
-  #image_array = raw(img)
-
-
+  #image_array = rawview(img)
 
   expected_number_of_bins = 2^8;
-
 
   (range, counts) = hist(reshape(image_array,length(image_array)),expected_number_of_bins);
 
@@ -123,15 +106,14 @@ function graythresh(img)
 
   return threshold
 end
-
-
+################################################################
 function im2bw(img, threshold)
   # im2bw - converts image into a binary image. Input: image (expected image
   # format obtained by Images.imread,  see Images package  for more information)
   # and threshold (floating point number). E.g. to convert an array to image use
   # grayim(array) or colorim(array).
 
-if Images.colorspace(img) != "Gray"
+if Images.eltype(img) == (Gray{Float64} || Gray{Float32} || Gray{Float16} )
     error("Input Image should be grayscale")
   end
 
@@ -156,14 +138,14 @@ if Images.colorspace(img) != "Gray"
 
   return Images.Image(blacknWhite, colorspace = "Binary")
 end
-
+################################################################
 function imshow(image)
   # wrapper for ImageView.view, need to add convertion of image to array and back
   ImageView.view(image)
 end
-
+################################################################
 function imread(path)
-  # wrapper for Images.imread with added image retrieval from url functionality
+  # wrapper for FileIO.load with added image retrieval from url functionality
   if (occursin(r"http://.*", path) || occursin(r"https://.*", path) || occursin(r"ftp://.*", path)|| occursin(r"smb://.*", path))
     imageContainer = nothing
     # By default, do silent download.
@@ -175,10 +157,10 @@ function imread(path)
   else
     imageContainer = path;
   end
-  image = Images.imread(imageContainer);
+  image = FileIO.load(imageContainer);
   return image
 end
-
+################################################################
 function bwlabel(inputImage,connectivity)
   # wrapper for Images.label_components
 
@@ -197,7 +179,7 @@ function bwlabel(inputImage,connectivity)
   return labeledImage;
 end
 
-
+################################################################
 function jet(numberOfColors::Int64)
   #Generate matlab-like jet colormap with specified amount of colors
   return jetColorMap = Colors.RGB{Float64}[
@@ -209,13 +191,13 @@ function jet(numberOfColors::Int64)
 
 end
 
-
+################################################################
 function hsv(numberOfColors::Int64)
   #Generate matlab-like hsv colormap with specified amount of colors
   return hsvColorMap = range(Colors.HSV(0,1,1), stop=Colors.HSV(330,1,1), length=numberOfColors);
 
 end
-
+################################################################
 function label2rgb(labeledMatrix, inputColorMap = "jet",backgroundColor = [1 1 1], isShuffled = "noshuffle")
 
 
@@ -268,5 +250,5 @@ function label2rgb(labeledMatrix, inputColorMap = "jet",backgroundColor = [1 1 1
 
 end
 
-
+################################################################
 end #End of ImageTools
