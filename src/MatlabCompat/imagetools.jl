@@ -36,7 +36,7 @@ include("imagetools/morph.jl")
 # import Tk
 import FileIO
 import Images
-import Images: properties, data, label_components
+import Images: Gray, properties, data, label_components
 # import FixedPointNumbers
 import ImageView # view images for users of the Julia command-line interface (non Juno or IJulia) https://juliaimages.org/latest/install/#Displaying-images-1
 import Colors
@@ -58,20 +58,21 @@ function graythresh(img)
   end
   #Check whether the input image is gray
 
-  if eltype(img) in [Gray{Float64}, Gray{Float32}, Gray{Float16} ]
+  if !(eltype(img) <: Gray)
     error("Input Image should be grayscale")
   end
 
-# raw --> rawview in Images # https://github.com/JuliaImages/ImageCore.jl/issues/83
+  # raw --> rawview in Images # https://github.com/JuliaImages/ImageCore.jl/issues/83
 
-  if isa(rawview(img),Array{UInt16,2})
-    #Convert image to 8bit and return it's raw values to compute the histogram
-    image_array = map(Images.BitShift(Uint8,8),rawview(img));
-  elseif isa(rawview(img),Array{Uint8,2})
-    image_array = rawview(img);
+  if isa(Images.rawview(img),Array{UInt16,2})
+    # Convert image to 8bit and return it's raw values to compute the histogram
+    # https://juliaimages.org/latest/conversions_views/#Views-for-%22converting%22-between-fixed-point-and-raw-representations-1
+    image_array = map(Images.BitShift(Uint8,8),Images.rawview(img));
+  elseif isa(Images.rawview(img),Array{Uint8,2})
+    image_array = Images.rawview(img);
   else
     @warn("Input Image is neither Uint8 or Uint16");
-    image_array = rawview(img);
+    image_array = Images.rawview(img);
   end
   #image_array = rawview(img)
 
@@ -113,7 +114,7 @@ function im2bw(img, threshold)
   # and threshold (floating point number). E.g. to convert an array to image use
   # grayim(array) or colorim(array).
 
-if eltype(img) in [Gray{Float64}, Gray{Float32}, Gray{Float16} ]
+  if !(eltype(img) <: Gray)
     error("Input Image should be grayscale")
   end
 
@@ -183,72 +184,72 @@ end
 function jet(numberOfColors::Int64)
   #Generate matlab-like jet colormap with specified amount of colors
   return jetColorMap = Colors.RGB{Float64}[
-    Colors.RGB(
-      clamp(min(4*ellement - 1.5, -4*ellement + 4.5) ,0.0,1.0),
-      clamp(min(4*ellement - 0.5, -4*ellement + 3.5) ,0.0,1.0),
-      clamp(min(4*ellement + 0.5, -4*ellement + 2.5) ,0.0,1.0))
-    for ellement in range(0.0, stop=1.0, length=numberOfColors)];
+  Colors.RGB(
+  clamp(min(4*ellement - 1.5, -4*ellement + 4.5) ,0.0,1.0),
+  clamp(min(4*ellement - 0.5, -4*ellement + 3.5) ,0.0,1.0),
+  clamp(min(4*ellement + 0.5, -4*ellement + 2.5) ,0.0,1.0))
+  for ellement in range(0.0, stop=1.0, length=numberOfColors)];
 
-end
-
-################################################################
-function hsv(numberOfColors::Int64)
-  #Generate matlab-like hsv colormap with specified amount of colors
-  return hsvColorMap = range(Colors.HSV(0,1,1), stop=Colors.HSV(330,1,1), length=numberOfColors);
-
-end
-################################################################
-function label2rgb(labeledMatrix, inputColorMap = "jet",backgroundColor = [1 1 1], isShuffled = "noshuffle")
-
-
-  #check if the labeledMatrix contains only integers
-  if !isinteger(labeledMatrix)
-    error("labeledMatrix is not an Integer matrix");
   end
 
-  #change indexing of the labeled Matrix to start from 1
-  labeledMatrix = labeledMatrix +1;
-  numberOfEllements =  maximum(labeledMatrix); # number of connected ellements in the Matrix
+  ################################################################
+  function hsv(numberOfColors::Int64)
+    #Generate matlab-like hsv colormap with specified amount of colors
+    return hsvColorMap = range(Colors.HSV(0,1,1), stop=Colors.HSV(330,1,1), length=numberOfColors);
 
-  if inputColorMap == "jet"
-    currentColormap =  jet(numberOfEllements);
-  elseif inputColorMap == "hsv"
-    currentColormap =  hsv(numberOfEllements);
-    #check if custom colormap is loaded
-  elseif is(typeof(inputColorMap),Array{Colors.RGB,1})
+  end
+  ################################################################
+  function label2rgb(labeledMatrix, inputColorMap = "jet",backgroundColor = [1 1 1], isShuffled = "noshuffle")
 
-    if length(inputColorMap) == maximum(labeledMatrix)
-      currentColormap = inputColorMap;
-    else
-      error("Input Colormap size is inconsistent with the Labeled Image");
+
+    #check if the labeledMatrix contains only integers
+    if !isinteger(labeledMatrix)
+      error("labeledMatrix is not an Integer matrix");
     end
-  else
-    error("Invalid Input Colormap");
+
+    #change indexing of the labeled Matrix to start from 1
+    labeledMatrix = labeledMatrix +1;
+    numberOfEllements =  maximum(labeledMatrix); # number of connected ellements in the Matrix
+
+    if inputColorMap == "jet"
+      currentColormap =  jet(numberOfEllements);
+    elseif inputColorMap == "hsv"
+      currentColormap =  hsv(numberOfEllements);
+      #check if custom colormap is loaded
+    elseif is(typeof(inputColorMap),Array{Colors.RGB,1})
+
+      if length(inputColorMap) == maximum(labeledMatrix)
+        currentColormap = inputColorMap;
+      else
+        error("Input Colormap size is inconsistent with the Labeled Image");
+      end
+    else
+      error("Invalid Input Colormap");
+    end
+
+    #convert input backgroundColor to RGB type
+    backgroundColor = Colors.RGB(backgroundColor[1],backgroundColor[2],backgroundColor[3]);
+
+    if  isShuffled == "shuffle"
+      #shuffle the colormap
+      currentColormap  = shuffle(currentColormap);
+    elseif isShuffled == "noshuffle"
+      #do nothing
+    else
+      error("isShuffled can be either shuffle or noshuffle ");
+    end
+
+    if (currentColormap[1] != backgroundColor)
+      currentColormap = [backgroundColor,currentColormap[1:end-1]];
+    end
+
+    indexedImage = Images.ImageCmap(labeledMatrix, currentColormap);
+    outputRGB = convert(Images.Image, indexedImage);
+
+
+    return outputRGB;
+
   end
 
-  #convert input backgroundColor to RGB type
-  backgroundColor = Colors.RGB(backgroundColor[1],backgroundColor[2],backgroundColor[3]);
-
-  if  isShuffled == "shuffle"
-    #shuffle the colormap
-    currentColormap  = shuffle(currentColormap);
-  elseif isShuffled == "noshuffle"
-    #do nothing
-  else
-    error("isShuffled can be either shuffle or noshuffle ");
-  end
-
-  if (currentColormap[1] != backgroundColor)
-    currentColormap = [backgroundColor,currentColormap[1:end-1]];
-  end
-
-  indexedImage = Images.ImageCmap(labeledMatrix, currentColormap);
-  outputRGB = convert(Images.Image, indexedImage);
-
-
-  return outputRGB;
-
-end
-
-################################################################
+  ################################################################
 end #End of ImageTools
