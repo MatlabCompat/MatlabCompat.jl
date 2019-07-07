@@ -12,6 +12,14 @@ Julia is a new language with a dynamically growing community. It has a lot of sy
 
 However, as a word of caution Julia is not MATLAB/Octave and was never meant to be. This library is not meant to substitute any commercial products (including those of Mathworks Inc.), nor is it meant to make Julia language closer to MATLAB/Octave. THe one and sole purpose of this library is to pave a way for enthusiast MATLB/Octave developers willing to engage with Julia open source language. For more information and help please refer to the [Julia language homepage](http://www.julialang.org/)
 
+### Implemented Functions:
+| Subpackage  |            |         |        |        |         |     |     |           |       |
+|-------------|------------|---------|--------|--------|---------|-----|-----|-----------|-------|
+| Imagetools  | graythresh | im2bw   | imshow | imread | bwlabel | jet | hsv | label2rgb | strel |
+| Io          | load       |         |        |        |         |     |     |           |       |
+| MathTools   | numel      | max     |        |        |         |     |     |           |       |
+| StringTools | disp       | num2str | strcat |        |         |     |     |           |       |
+
 
 ### Dependencies
 
