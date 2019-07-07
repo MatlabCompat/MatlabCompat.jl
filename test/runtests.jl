@@ -61,8 +61,8 @@ println("setting true tests results");
 trueThreshold = 0.11100752480522075;
 trueBWSum= 3;
 
-# println("testing graythresh()");
-# @test graythresh(img) == trueThreshold;
+println("testing graythresh()");
+@test graythresh(img) == trueThreshold;
 
 println("testing im2bw()");
 @test sum( reinterpret( Float32, float32( im2bw(img, trueThreshold) ) )[:] ) == trueBWSum;

@@ -58,7 +58,7 @@ function graythresh(img)
   end
   #Check whether the input image is gray
 
-  if Images.eltype(img) == (Gray{Float64} || Gray{Float32} || Gray{Float16} )
+  if eltype(img) in [Gray{Float64}, Gray{Float32}, Gray{Float16} ]
     error("Input Image should be grayscale")
   end
 
@@ -113,7 +113,7 @@ function im2bw(img, threshold)
   # and threshold (floating point number). E.g. to convert an array to image use
   # grayim(array) or colorim(array).
 
-if Images.eltype(img) == (Gray{Float64} || Gray{Float32} || Gray{Float16} )
+if eltype(img) in [Gray{Float64}, Gray{Float32}, Gray{Float16} ]
     error("Input Image should be grayscale")
   end
 
